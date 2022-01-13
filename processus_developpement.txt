@@ -1,0 +1,14 @@
+I) Création des tables
+II) Créer les triggers qui vont renseigner les champs calculables
+III) Python :
+	1) Ouvrir CSV avec pandas et classer par SIRET
+	2) Lire une ligne
+		A) récupérer tous les champs dans des variables
+		B) insérer dans la table activité la ou les activités de la ligne si elles n'existent pas
+			et préciser frais ou pas frais
+		C) liste les idactivite correspondants
+		D) insérer les données dans etablissement si l'établissement n'existe pas déjà (SIRET unique) et bien attention à normaliser les noms de communes. 
+		E) insérer les lignes inspection correspondantes en notant les nombres d'agréments différents
+		F) renseigner le champs nb_agrements
+
+IV) FRONT et BACK en flask
