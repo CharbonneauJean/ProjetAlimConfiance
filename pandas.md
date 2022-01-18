@@ -88,3 +88,9 @@ df["column_name"]
 ```python
 df["column_name"].iloc[n]
 ```
+
+## Obtenir la valeur précise de la ligne x et de la colonne y
+```python
+df.values[x][y]
+```
+
