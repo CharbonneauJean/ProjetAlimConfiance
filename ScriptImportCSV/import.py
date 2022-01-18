@@ -26,5 +26,5 @@ for row in inspections.itertuples():
 
     # Bosser sur les champs
 
-    
+
 
