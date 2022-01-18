@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-inspections = pd.read_csv('export_alimconfiance.csv', header=0, sep=';', dtype= {3: np.str}, parse_dates = True)
+inspections = pd.read_csv('export_alimconfiance.csv', header=0, sep=';', dtype= {3: str}, parse_dates = True)
 
 inspections.info()
 
@@ -23,6 +23,8 @@ for row in inspections.itertuples():
     geores = row[11]
     filtre = row[12]
     ods_type_activite = row[13]
+
+    # Bosser sur les champs
 
     
 
