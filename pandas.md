@@ -94,3 +94,11 @@ df["column_name"].iloc[n]
 df.values[x][y]
 ```
 
+## Ajouter une colonne à une DataFrame
+```python
+# Step 1 : créer la liste des valeurs de la colonne
+listValeurs = ['Val1', 'Val2', 'Val3', 'Val4']
+# Step 2 : ajouter la colonne
+df['newColumnName'] = listValeurs
+```
+
