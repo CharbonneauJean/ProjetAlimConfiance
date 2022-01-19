@@ -102,6 +102,14 @@ listValeurs = ['Val1', 'Val2', 'Val3', 'Val4']
 df['newColumnName'] = listValeurs
 ```
 
+## Ajouter une colonne à une DataFrame à une position précise
+```python
+# Step 1 : créer la liste des valeurs de la colonne
+listValeurs = ['Val1', 'Val2', 'Val3', 'Val4']
+# Step 2 : ajouter la colonne
+df.insert(position, "newColumnName", listValeurs, allow_duplicates = True)
+```
+
 ## Prendre seulement certaines colonnes du DataFrame
 ```python
 df[ ["column_name1", "column_name2", "column_name2"] ]

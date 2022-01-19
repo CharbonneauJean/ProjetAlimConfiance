@@ -1,5 +1,12 @@
 import pandas as pd
 import numpy as np
+import unidecode
+
+def normalisationNomVille(nomVille : str):
+    nomVilleNorm = unidecode.unidecode(nomVille.lower()).replace('-',' ').replace('\'', ' ')
+    return nomVilleNorm
+
+
 
 inspections = pd.read_csv('export_alimconfiance.csv', header=0, sep=';', dtype= {3: str}, parse_dates = True)
 
@@ -7,7 +14,15 @@ inspections.info()
 
 inspections.sort_values(by = 'SIRET', inplace = True)
 
-# print(inspections.head(10))
+inspections.insert(2, "SIREN", inspections['SIRET'].apply(lambda x: str(x)[:9]), allow_duplicates = True)
+
+inspections.insert(4, "DEPARTEMENT", inspections['Code_postal'].apply(lambda x: str(x)[:2]), allow_duplicates = True)
+
+inspections.insert(7, "COMMUNE_NORM", inspections['Libelle_commune'].apply(lambda x: normalisationNomVille(x)), allow_duplicates = True)
+
+inspections['Date_inspection'] = inspections['Date_inspection'].apply(lambda x: str(x)[:10])
+
+print(inspections.head(10))
 
 for row in inspections.itertuples():
     APP_Libelle_etablissement = row[1]
@@ -26,5 +41,4 @@ for row in inspections.itertuples():
 
     # Bosser sur les champs
 
-
-
+inspections.to_csv('out.csv', sep=';')
