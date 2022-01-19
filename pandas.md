@@ -102,3 +102,302 @@ listValeurs = ['Val1', 'Val2', 'Val3', 'Val4']
 df['newColumnName'] = listValeurs
 ```
 
+## Prendre seulement certaines colonnes du DataFrame
+```python
+df[ ["column_name1", "column_name2", "column_name2"] ]
+```
+
+## Grouper les lignes selon une colonne
+```python
+df[ ["column_name1", "column_name2", "column_name2"] ].groupby("column_name1")
+```
+
+## Appliquer une fonction d'aggrégation sur le regroupement
+```python
+df[ ["column_name1", "column_name2", "column_name2"] ].groupby("column_name1").sum("column_name2")
+```
+
+## Trier les valeurs selon la colonne précisée (paramètre ascending par défaut à True)
+```python
+df[ ["column_name1", "column_name2", "column_name2"] ].groupby("column_name1").sum("column_name2").sort_values('quantity', ascending=False)
+```
+
+## Appliquer une fonction (lambda) sur toutes les valeurs de la colonne
+```python
+df['column_name1'] = df['column_name1'].apply(lambda x: float(x.replace("$", " "))) # ici ça remplace le $ par un espace
+```
+
+## Retourne les valeurs de la colonne en enlevant les doublons
+```python
+df['column_name'].unique()
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
+
+## Titre
+```python
+
+```
