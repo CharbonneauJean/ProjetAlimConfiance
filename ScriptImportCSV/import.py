@@ -1,24 +1,24 @@
 import pandas as pd
-import numpy as np
 import unidecode
 
-def normalisationNomVille(nomVille : str):
-    nomVilleNorm = unidecode.unidecode(nomVille.lower()).replace('-',' ').replace('\'', ' ')
-    return nomVilleNorm
+
+def normalisation_nom_ville(nom_ville: str) -> str:
+    nom_ville_norm = unidecode.unidecode(nom_ville.lower()).replace('-', ' ').replace('\'', ' ')
+    return nom_ville_norm
 
 
-
-inspections = pd.read_csv('export_alimconfiance.csv', header=0, sep=';', dtype= {3: str}, parse_dates = True)
+inspections = pd.read_csv('export_alimconfiance.csv', header=0, sep=';', dtype={3: str}, parse_dates=True)
 
 inspections.info()
 
-inspections.sort_values(by = 'SIRET', inplace = True)
+inspections.sort_values(by='SIRET', inplace=True)
 
-inspections.insert(2, "SIREN", inspections['SIRET'].apply(lambda x: str(x)[:9]), allow_duplicates = True)
+inspections.insert(2, "SIREN", inspections['SIRET'].apply(lambda x: str(x)[:9]), allow_duplicates=True)
 
-inspections.insert(4, "DEPARTEMENT", inspections['Code_postal'].apply(lambda x: str(x)[:2]), allow_duplicates = True)
+inspections.insert(4, "DEPARTEMENT", inspections['Code_postal'].apply(lambda x: str(x)[:2]), allow_duplicates=True)
 
-inspections.insert(7, "COMMUNE_NORM", inspections['Libelle_commune'].apply(lambda x: normalisationNomVille(x)), allow_duplicates = True)
+inspections.insert(7, "COMMUNE_NORM", inspections['Libelle_commune'].apply(lambda x: normalisation_nom_ville(x)),
+                   allow_duplicates=True)
 
 inspections['Date_inspection'] = inspections['Date_inspection'].apply(lambda x: str(x)[:10])
 
