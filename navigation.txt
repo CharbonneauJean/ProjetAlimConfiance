@@ -1,0 +1,20 @@
+login.html
+	--POST--> login.html (mdp erroné)
+	--POST--> recherche.html (login validé)
+	
+recherche.html
+	-> ajouter_etablissement.html
+	-> recherche.html (avec critères de recherche)
+		-> met à jour la liste
+		-> affiche les boutons
+	-> recherche.html (en ayant cliqué sur le bouton calcul)
+		-> affiche les priorités de visite
+	-> infos_etablissement.html (quand on clique sur un etab)
+
+ajouter_etablissement.html
+	-> infos_etablissement.html (etab ajouté)
+	-> recherche.html (revenir à la recherche)
+
+
+logout button
+	-> login.html (en ayant supprimé la session)

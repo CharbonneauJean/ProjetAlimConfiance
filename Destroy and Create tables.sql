@@ -13,11 +13,16 @@ CREATE TABLE ETABLISSEMENT(
    libelle_etablissement VARCHAR(200) ,
    adresse VARCHAR(200) ,
    code_postal VARCHAR(200) ,
-   departement VARCHAR(200) ,
+   departement INTEGER,
    commune VARCHAR(200) ,
    geores VARCHAR(200) ,
+   geores_lat DOUBLE PRECISION,
+   geores_lon DOUBLE PRECISION,
    nb_agrements INTEGER,
    commune_norm VARCHAR(200) ,
+   evolution_score DOUBLE PRECISION,
+   synthese_ai VARCHAR(200) ,
+   date_synt_ai DATE,
    PRIMARY KEY(idetablissement)
 );
 
@@ -40,8 +45,6 @@ CREATE TABLE INSPECTION(
    date_inspection DATE,
    synthese_eval VARCHAR(200) ,
    numero_agrement VARCHAR(200) ,
-   synthese_ai VARCHAR(200) ,
-   date_synt_ai DATE,
    idetablissement SERIAL,
    idactivite SERIAL,
    PRIMARY KEY(idinspection),

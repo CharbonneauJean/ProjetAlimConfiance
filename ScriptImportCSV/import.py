@@ -21,20 +21,20 @@ inspections.reset_index(inplace=True, drop=True)
 
 print(inspections.head(10))
 
-etablissement1 = model.Etablissement(
-        siret="000000",
-        siren="123132",
-        libelle_etablissement="Libellé",
-        adresse="Adresse",
-        code_postal="CP45",
-        departement="01",
-        commune="Strasbourg",
-        geores="48.02132132;5.20221",
-        nb_agrements=0,
-        commune_norm="strasbourg")
+# etablissement1 = model.Etablissement(
+#         siret="000000",
+#         siren="123132",
+#         libelle_etablissement="Libellé",
+#         adresse="Adresse",
+#         code_postal="CP45",
+#         departement="01",
+#         commune="Strasbourg",
+#         geores="48.02132132;5.20221",
+#         nb_agrements=0,
+#         commune_norm="strasbourg")
 
-model.session.add(etablissement1)  
-model.session.commit()
+# model.session.add(etablissement1)  
+# model.session.commit()
 
 # for row in inspections.itertuples():
 #     APP_Libelle_etablissement = row[1]
@@ -53,4 +53,4 @@ model.session.commit()
 
     # Bosser sur les champs
 
-inspections.to_csv('out.csv', sep=';')
+
