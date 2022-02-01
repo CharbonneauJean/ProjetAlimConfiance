@@ -20,7 +20,8 @@ CREATE TABLE ETABLISSEMENT(
    geores_lon DOUBLE PRECISION,
    nb_agrements INTEGER,
    commune_norm VARCHAR(200) ,
-   evolution_score DOUBLE PRECISION,
+   moy_score DOUBLE PRECISION,
+   nb_inspections INTEGER,
    synthese_ai VARCHAR(200) ,
    date_synt_ai DATE,
    PRIMARY KEY(idetablissement)

@@ -63,6 +63,7 @@ for row in inspections.itertuples():
         # print('FRESH activity detected')
         addUniqueActivite(APP_Libelle_activite_etablissement + "," + ods_type_activite, True)       
 
+
 inserted_etablissement = {}
 
 def addUniqueEtablissement(
@@ -177,6 +178,8 @@ for row in inspections.itertuples():
         thisIdActivite = utils.get_key(APP_Libelle_activite_etablissement + "," + ods_type_activite, inserted_activite)
         addUniqueInspection(Numero_inspection, Date_inspection, Synthese_eval_sanit, Agrement, thisIdEtablissement, thisIdActivite)
 
+    
+
 # On clean la colonne numero_agrement des valeur NaN
 model.session.execute("update inspection set numero_agrement = null where numero_agrement = 'NaN'")
 model.session.commit()
@@ -191,7 +194,7 @@ nb_scores = 0
 
 stmt = model.session.execute("select inspection.idetablissement, count(inspection.idinspection) as nbInspections from inspection group by inspection.idetablissement order by nbInspections desc")
 for row in stmt:
-    # on va calculer l'evolution score
+    # on va calculer le score moyen
     thisIdEtablissement = row[0]
     stmt_1 = model.session.execute(f"select synthese_eval from inspection where idetablissement = {thisIdEtablissement} order by date_inspection")
     for row_1 in stmt_1:
@@ -204,14 +207,15 @@ for row in stmt:
         else:
             sum_scores += score_a_corriger_d_urgence
         nb_scores+=1
-    thisEvolutionScore = sum_scores/nb_scores
-    # print('Evolution score for etablissement id ', thisIdEtablissement, ' : ', str(thisEvolutionScore))
-    model.session.execute(f"UPDATE etablissement set evolution_score={thisEvolutionScore} where idetablissement={thisIdEtablissement}")
+    thisMoyScore = sum_scores/nb_scores
+    # print('Avg score for etablissement id ', thisIdEtablissement, ' : ', str(thisMoyScore))
+    model.session.execute(f"UPDATE etablissement set moy_score={thisMoyScore}, nb_inspections={row[1]} where idetablissement={thisIdEtablissement}")
     model.session.commit()
     sum_scores=0
     nb_scores=0
 
-stmt = model.session.execute("select inspection.idetablissement, count(inspection.numero_agrement) as nbAgrements from inspection where numero_agrement is not null group by inspection.idetablissement order by nbAgrements desc")
+
+stmt = model.session.execute("select idetablissement, count(distinct numero_agrement) as nbAgrements from inspection where numero_agrement is not null group by idetablissement order by nbAgrements desc")
 
 for row in stmt:
     # on met à jour le nombre d'agréments pour chaque établissement
@@ -220,3 +224,7 @@ for row in stmt:
 
 stmt = model.session.execute("UPDATE etablissement set nb_agrements=0 where nb_agrements is null")
 model.session.commit()
+
+
+
+

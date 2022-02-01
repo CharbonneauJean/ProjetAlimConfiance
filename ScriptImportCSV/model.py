@@ -38,7 +38,8 @@ class Etablissement(Base):
     geores_lon = Column(Float(53))
     nb_agrements = Column(Integer)
     commune_norm = Column(String(200))
-    evolution_score = Column(Float(53))
+    moy_score = Column(Float(53))
+    nb_inspections = Column(Integer)
     synthese_ai = Column(String(200))
     date_synt_ai = Column(Date)
 

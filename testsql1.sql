@@ -1,3 +1,8 @@
+select * from inspection ins
+join etablissement eta on eta.idetablissement = ins.idetablissement
+join activite act on act.idactivite = ins.idactivite
+order by eta.idetablissement
+
 SELECT count(*) FROM public.activite
 
 select * from public.activite
