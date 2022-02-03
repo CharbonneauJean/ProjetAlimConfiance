@@ -14,11 +14,7 @@ def getModelsResults(idinspection : int):
             from inspection ins
             join etablissement eta on ins.idetablissement = eta.idetablissement
             join activite act on act.idactivite = ins.idactivite
-            where idinspection in (
-                select idinspection from motcle_inspection where idmotcle in ( select idmotcle from mots_cles where motcle = '{keyword.lower()}')
-                )
-            order by num_synthese
-            -- limit 20
+            where idinspection = {idinspection}
         """)
     
     item1 = dtos.SearchItem()

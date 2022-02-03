@@ -71,7 +71,7 @@ def simuler_nouvelle_visite_etab():
 
     resultAissa, resultArthur, resultJean, inspectionInfo = services.getModelsResults(idinspection)
 
-    return render_template('simulerNvleVisiteEtab.html')
+    return render_template('simulerNvleVisiteEtab.html', resultAissa = resultAissa, resultArthur = resultArthur, resultJean = resultJean, ins = inspectionInfo)
 
 @app.route('/configIA')
 def config_ia():
