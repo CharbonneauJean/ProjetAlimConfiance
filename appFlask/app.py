@@ -62,7 +62,11 @@ def search_etab_get():
 
 @app.route('/simulerEtab')
 def simuler_etab():
-    return render_template('simulerEtab.html')
+    idinspection = 33610
+
+    resultAissa, resultArthur, resultJean, inspectionInfo = services.getModelsResults(idinspection)
+
+    return render_template('simulerNvleVisiteEtab.html', resultAissa = resultAissa, resultArthur = resultArthur, resultJean = resultJean, ins = inspectionInfo)
 
 
 @app.route('/simulerNvleVisite')
@@ -75,11 +79,11 @@ def simuler_nouvelle_visite_etab():
 
 @app.route('/configIA')
 def config_ia():
-    return render_template('configIA.html')
+    return render_template('notImplemented.html')
 
 @app.route('/searchEtabFromPos')
 def search_etab_from_pos():
-    return render_template('searchEtabFromPos.html')
+    return render_template('notImplemented.html')
 
 @app.route('/aboutUs')
 def about_us():
