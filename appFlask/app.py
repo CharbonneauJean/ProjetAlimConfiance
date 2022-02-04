@@ -9,6 +9,7 @@ from flask import Flask
 from flask import render_template
 from flask import send_from_directory
 from flask import request
+from flask import redirect
 from datetime import date
 import dtos
 import services
@@ -83,7 +84,12 @@ def config_ia():
 
 @app.route('/searchEtabFromPos')
 def search_etab_from_pos():
-    return render_template('notImplemented.html')
+
+    return redirect("/searchEtabGet?keyword=nancy")
+
+    #inspections = services.getInspectionsFromKeyword('nancy')
+
+    #return render_template('searchEtabResult.html', keyword = 'nancy', inspections = inspections, nbInspections = len(inspections))
 
 @app.route('/aboutUs')
 def about_us():

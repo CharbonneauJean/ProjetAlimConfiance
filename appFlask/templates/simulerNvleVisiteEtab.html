@@ -22,7 +22,7 @@
         function validateForm() {
             typedKeyword = document.getElementById('keywordInputId').value
 
-            if(typedKeyword.trim().length < 3) {
+            if (typedKeyword.trim().length < 3) {
                 alert('Please enter a 3 letters keyword.')
             } else {
                 document.getElementById('searchFormId').submit()
@@ -275,32 +275,52 @@
                         <!-- Border Left Utilities -->
                         <div class="col-lg-6">
 
-                            <div class="card mb-4 py-3 border-bottom-success">
+
+                            {% if resultJean == 1 %}
+                            <div class="card mb-4 py-3 border-bottom-danger">
                                 <div class="card-body">
-                                    <h2>Prédiction Aissa = {{resultAissa}}/4</h2><br>
-                                    Notre modèle prédit que cet établissement va obtenir une bonne synthèse si vous le visitez.
+                                    <h2>Prédiction du modèle = {{resultJean}}/4</h2><br>
+                                    Danger ! Cet établissement doit être contrôlé au plus vite.
                                 </div>
                             </div>
-
+                            {% elif resultJean == 2%}
+                            <div class="card mb-4 py-3 border-bottom-warning">
+                                <div class="card-body">
+                                    <h2>Prédiction du modèle = {{resultJean}}/4</h2><br>
+                                    Attention ! Cet établissement est sur une mauvaise pente. Il faut penser à le visiter prochainement pour éviter la catastrophe.
+                                </div>
+                            </div>
+                            {% elif resultJean == 3%}
                             <div class="card mb-4 py-3 border-bottom-secondary">
                                 <div class="card-body">
-                                    <h2>Prédiction Arthur = {{resultArthur}}/4</h2><br>
-                                    Il semblerait que cet établissement n'a pas un résultat excellent, mais c'est quand même suffisant. Pour l'instant.
+                                    <h2>Prédiction du modèle = {{resultJean}}/4</h2><br>
+                                    Cet établissement a obtenu un résultat satisfaisant.
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="card mb-4 py-3 border-bottom-success">
+                                <div class="card-body">
+                                    <h2>Prédiction du modèle = {{resultJean}}/4</h2><br>
+                                    Cet établissement est tellement sain, qu'on peut y manger par terre !
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="card mb-4 py-3 border-bottom-secondary">
+                                <div class="card-body">
+                                    <img src='img/img1.png'>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="card mb-4 py-3 border-bottom-warning">
+                            
+                            <div class="card mb-4 py-3 border-bottom-success">
                                 <div class="card-body">
-                                    <h2>Prédiction Jean = {{resultJean}}/4</h2><br>
-                                    Attention ! Ce restaurant est sur la mauvaise pente. Il faut penser à le visiter prochainement pour éviter la catastrophe.
+                                    <img src='img/img2.png'>
                                 </div>
                             </div>
-
                             <div class="card mb-4 py-3 border-bottom-danger">
                                 <div class="card-body">
-                                    <h2>Prédiction Pessimiste = 1/4</h2><br>
-                                    Veuillez vous rendre dans cet établissement au plus vite, la santé des consommateurs est en danger !
+                                    <img src='img/img3.png'>
                                 </div>
                             </div>
                         </div>

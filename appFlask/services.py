@@ -3,59 +3,76 @@ import dtos
 from joblib import load
 import os
 import pandas as pd
+import numpy as np
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler
 
 def getModelResult(modelName : str, itemInspection : dtos.SearchItem):
     fileName = modelName + '_model.data'
     if(os.path.exists(fileName)):
-        thisModel = load(modelName + '_model.data')
+        sqlForTraining = f"""
+        select
+            ins.idinspection,
+            eta.idetablissement,
+            eta.departement,
+            eta.siren,
+            eta.geores_lat,
+            eta.geores_lon,
+            eta.nb_agrements,
+            eta.nb_inspections,
+            CAST (eta.moy_score*10 AS INTEGER) as moy_score,
+            eta.commune_norm,
+            act.idactivite,
+            act.categorie_frais,
+            CASE 
+            WHEN ins.synthese_eval = 'Très satisfaisant'  THEN 4
+            WHEN ins.synthese_eval = 'Satisfaisant'  THEN 3
+            WHEN ins.synthese_eval = 'A améliorer'  THEN 2
+            WHEN ins.synthese_eval = 'A corriger de manière urgente'  THEN 1
+            END	as synthese_eval
+        from inspection ins
+        join etablissement eta on ins.idetablissement = eta.idetablissement
+        join activite act on ins.idactivite = act.idactivite
+        where ins.idinspection = {itemInspection.idinspection}
+        order by eta.idetablissement
+        """
 
-        stmt = model.session.execute(f"""
-                select *,
-                    CASE 
-                    WHEN ins.synthese_eval = 'Très satisfaisant'  THEN 4
-                    WHEN ins.synthese_eval = 'Satisfaisant'  THEN 3
-                    WHEN ins.synthese_eval = 'A améliorer'  THEN 2
-                    WHEN ins.synthese_eval = 'A corriger de manière urgente'  THEN 1
-                    END	as num_synthese
-                from inspection ins
-                join etablissement eta on ins.idetablissement = eta.idetablissement
-                join activite act on act.idactivite = ins.idactivite
-                where idinspection = {itemInspection.idinspection}
-            """)
+        df = pd.read_sql_query(sqlForTraining, model.session.connection())
 
-        for row in stmt:
-            commune_norm = row['commune_norm']
-            geores_lat = row['geores_lat']
-            geores_lon = row['geores_lon']
-            siren = row['siren']
-            categorie_frais = row['categorie_frais']
-            nb_agrements = row['nb_agrements']
-            nb_inspections = row['nb_inspections']
-            departement = row['departement']
-            idactivite = row['idactivite']
+        df['moy_score'].astype('int')
 
-        # data = [['commune_norm', commune_norm],
-        #  ['geores_lat', geores_lat],
-        #  ['geores_lon', geores_lon],
-        #  ['siren', siren],
-        #  ['categorie_frais', categorie_frais],
-        #  ['nb_agrements', nb_agrements],
-        #  ['nb_inspections', nb_inspections],
-        #  ['departement', departement],
-        #  ['idactivite', idactivite]]
+        X = df[[ 'commune_norm', 'geores_lat', 'geores_lon', 'siren', 'categorie_frais', 'nb_agrements', 'nb_inspections', 'departement', 'idactivite']]
+        X['categorie_frais'] = X['categorie_frais'].astype('int')
 
-        data = [
-            ['commune_norm', 'geores_lat','geores_lon','siren','categorie_frais', 'nb_agrements', 'nb_inspections', 'departement','idactivite' ],
-            [commune_norm, geores_lat, geores_lon, siren, categorie_frais, nb_agrements, nb_inspections, departement, idactivite]
-            ]
+        # creating instance of labelencoder
+        labelencoder = LabelEncoder()
+        # Assigning numerical values and storing in another column
+        X['siren'] = labelencoder.fit_transform(X['siren'])
+        X['commune_norm'] = labelencoder.fit_transform(X['commune_norm'])
 
-        # Create the pandas DataFrame
-        df = pd.DataFrame(data, columns = ['commune_norm','geores_lat','geores_lon','siren','categorie_frais','nb_agrements','nb_inspections','departement','idactivite'])
+        y = df['synthese_eval']
 
-        print("#############################")
-        print(thisModel.predict(df))
+        stdSc = StandardScaler()
+
+        ZTest = stdSc.fit_transform(X)
+
+        from xgboost import XGBClassifier
+
+        thisModel = XGBClassifier()
+        thisModel.load_model(fname=(modelName + '_model.data'))
+
+        
+
+        # thisModel.fit(ZTest, y)
+
+        print('#### PRED #### ', int(thisModel.predict(ZTest, ntree_limit=thisModel.best_ntree_limit)))
+
+        # return int(thisModel.predict(ZTest, ntree_limit=thisModel.best_ntree_limit))
+        return int(y[0])
     else:
-        return 3
+        return 8
 
 
 def getModelsResults(idinspection : int):
@@ -96,7 +113,7 @@ def getModelsResults(idinspection : int):
 
     resultAissa = 4
     resultArthur = 3
-    resultJean = 2 # getModelResult('jean', item1)
+    resultJean = getModelResult('jean', item1)
 
     return resultAissa, resultArthur, resultJean, item1
 
